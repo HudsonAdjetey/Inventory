@@ -1,7 +1,16 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/app/redux";
 import { setIsSidebarCollapsed } from "@/app/state";
-import { LucideIcon, Menu } from "lucide-react";
+import {
+  Archive,
+  Clipboard,
+  Layout,
+  LucideIcon,
+  Menu,
+  CircleDollarSign,
+  SlidersHorizontal,
+  Users,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -56,7 +65,7 @@ const Sidebar = () => {
     dispatch(setIsSidebarCollapsed(!isSliderCollapsed));
   };
 
-  const sidebarClassNames = `fixed flex flex-col ${
+  const sidebarClassNames: string = `fixed flex flex-col ${
     isSliderCollapsed ? "w-0 md:w-16" : "w-72 md:w-64 "
   } bg-white transition-all duration-300 overflow-hidden h-full shadow-md z-50`;
 
@@ -82,10 +91,46 @@ const Sidebar = () => {
       </div>
       <div className="flex-grow mt-8">
         {/* links */}
+        <SidebarLink
+          href="/dashboard"
+          icon={Layout}
+          label="Dashboard"
+          isCollapsed={isSliderCollapsed}
+        />
+        <SidebarLink
+          href="/inventory"
+          icon={Archive}
+          label="Inventory"
+          isCollapsed={isSliderCollapsed}
+        />
+        <SidebarLink
+          href="/products"
+          icon={Clipboard}
+          label="Products"
+          isCollapsed={isSliderCollapsed}
+        />
+        <SidebarLink
+          href="/users"
+          icon={Users}
+          label="Users"
+          isCollapsed={isSliderCollapsed}
+        />
+        <SidebarLink
+          href="/settings"
+          icon={SlidersHorizontal}
+          label="Settings"
+          isCollapsed={isSliderCollapsed}
+        />
+        <SidebarLink
+          href="/expenses"
+          icon={CircleDollarSign}
+          label="Expenses"
+          isCollapsed={isSliderCollapsed}
+        />
         {/* links */}
       </div>
       {/* footer display */}
-      <div>
+      <div className={`${isSliderCollapsed ? "hidden" : "block"}}`}>
         <p className="text-center text-xs text-gray-500">&copy; 2024</p>
       </div>
       {/* footer display */}
