@@ -1,8 +1,50 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/app/redux";
 import { setIsSidebarCollapsed } from "@/app/state";
-import { Menu } from "lucide-react";
+import { LucideIcon, Menu } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
+
+interface SidebarLinkProps {
+  href: string;
+  icon: LucideIcon;
+  label: string;
+  isCollapsed: boolean;
+}
+
+const SidebarLink = ({
+  href,
+  icon: Icon,
+  label,
+  isCollapsed,
+}: SidebarLinkProps) => {
+  const pathname = usePathname();
+  const isActive =
+    pathname === href || (pathname === "/" && href === "/dashboard");
+
+  return (
+    <Link href={href}>
+      <div
+        className={`cursor-pointer flex items-center ${
+          isCollapsed ? "justify-between py-4" : "justify-start px-8 py-4"
+        } hover:text-blue-500 hover:bg-blue-100 gap-3 transition-colors ${
+          isActive ? "bg-blue-200 text-white " : ""
+        }`}
+      >
+        <Icon className="w-6 h-6 !text-gray-700" />
+        <span
+          className={`${
+            isCollapsed ? "hidden" : "block"
+          } font-medium text-gray-700`}
+        >
+          {label}
+        </span>
+        {isCollapsed && <Icon className="w-4 h-4 rotate-90" />}
+      </div>
+    </Link>
+  );
+};
 
 const Sidebar = () => {
   const dispatch = useAppDispatch();
@@ -22,9 +64,17 @@ const Sidebar = () => {
     <div className={sidebarClassNames}>
       <div className="flex gap-3 justify-between md:justify-normal items-center pt-8">
         <div>logo</div>
-        <h1 className="font-extrabold text-2xl">SwiftTech</h1>
+        <h1
+          className={`${
+            isSliderCollapsed ? "hidden" : "block"
+          }  font-extrabold text-2xl`}
+        >
+          SwiftTech
+        </h1>
         <button
-          className="md:hidden px-3 py-3 bg-gray-100 rounded-full bover:bg-blue-100"
+          className={`md:hidden px-3 py-3 bg-gray-100 rounded-full bover:bg-blue-100 ${
+            isSliderCollapsed ? "px-5" : "px-8"
+          }`}
           onClick={toggleSidebar}
         >
           <Menu className="w-4 h-4" />

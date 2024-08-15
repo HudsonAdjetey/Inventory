@@ -27,7 +27,7 @@ const DashboardLayout = ({ children }: Props) => {
   return (
     <div
       className={`flex bg-gray-50 text-gray-900 w-full min-h-screen ${
-        isDarkMode ? "light" : "dark"
+        isDarkMode ? "dark" : "light"
       }`}
     >
       <Sidebar />
